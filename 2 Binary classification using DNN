@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow.keras.datasets import imdb
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras import models, layers
+from sklearn.model_selection import train_test_split
+import tensorflow as tf
+
+(X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=10000)
+
+maxlen = 200
+X_train = pad_sequences(X_train, maxlen=maxlen)
+X_test = pad_sequences(X_test, maxlen=maxlen)
+
+from tensorflow.keras import models, layers
+model = models.Sequential()
+model.add(layers.Input(shape=(200,))) # sequence length
+model.add(layers.Embedding(10000, 32))
+model.add(layers.GlobalAveragePooling1D())
+model.add(layers.Dense(50, activation="relu"))
+model.add(layers.Dropout(0.3))
+model.add(layers.Dense(1, activation="sigmoid"))
+model.summary()
+
+model.compile(
+    optimizer="adam",
+    loss="binary_crossentropy",
+    metrics=["accuracy"]
+)
+results = model.fit(
+    X_train, y_train,
+    epochs=3,
+    batch_size=512,
+    validation_split=0.2
+)
+
+score = model.evaluate(X_test, y_test)
+print("Test accuracy:", score[1])
