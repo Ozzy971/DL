@@ -42,6 +42,7 @@ for i, col in enumerate(features):
     plt.ylabel("Price")
 plt.show()
 
+#data = data.dropna() #to drop nan values
 X = data.iloc[:,:-1]
 y = data["PRICE"]
 
