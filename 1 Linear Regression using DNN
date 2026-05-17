@@ -8,7 +8,7 @@ columns = [
 "RAD","TAX","PTRATIO","B","LSTAT","PRICE"
 ]
 
-data = pd.read_csv("housing.csv", sep=r"\s+", header=None)
+data = pd.read_csv("housing.csv")
 data.columns = columns
 
 print(data.head())
